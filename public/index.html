@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Заказ товаров</title>
+  <link rel="stylesheet" href="style.css"> <!-- ✅ Подключение стиля -->
+</head>
+<body>
+  <h1>Сделать заказ</h1>
+
+  <form id="orderForm">
+    <label>Выберите товар:</label><br>
+    <select id="product" required>
+      <option value="Товар 1">Товар 1</option>
+      <option value="Товар 2">Товар 2</option>
+      <option value="Товар 3">Товар 3</option>
+    </select><br><br>
+
+    <label>Имя:</label><br>
+    <input type="text" id="name" required><br><br>
+
+    <label>Телефон:</label><br>
+    <input type="text" id="phone" required><br><br>
+
+    <label>Адрес:</label><br>
+    <textarea id="address" required></textarea><br><br>
+
+    <button type="submit">Отправить заказ</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('orderForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const order = {
+        product: document.getElementById('product').value,
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value
+      };
+
+      await fetch('/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      });
+
+      alert('Заказ отправлен!');
+      form.reset();
+    });
+  </script>
+</body>
+</html>
+
